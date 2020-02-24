@@ -52,7 +52,6 @@ extension ObjectData {
         case code
     }
     
-    // in an extension so that we’ll still get the default memberwise initializer
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         let confidence = try values.decode(Double.self, forKey: .confidence)

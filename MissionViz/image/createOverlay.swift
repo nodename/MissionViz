@@ -9,20 +9,6 @@
 import Foundation
 import UIKit
 
-/*
-let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
-let image = renderer.image { context in
-    // draw your image into your view
-    context.cgContext.draw(UIImage(named: "myImage")!.cgImage!, in: view.frame)
-    // draw even more...
-    context.cgContext.setFillColor(UIColor.red.cgColor)
-    context.cgContext.setStrokeColor(UIColor.black.cgColor)
-    context.cgContext.setLineWidth(10)
-    context.cgContext.addRect(view.frame)
-    context.cgContext.drawPath(using: .fillStroke)
-}
- */
-
 fileprivate
 func makeOverlayRect(_ object: ObjectData) -> CGRect {
     let w = object.imgSize.width
@@ -30,8 +16,8 @@ func makeOverlayRect(_ object: ObjectData) -> CGRect {
     let width = object.boundingBox.size.width * w
     
     let h = object.imgSize.height
-    let y = object.boundingBox.origin.y * h
     let height = object.boundingBox.size.height * h
+    let y = h - object.boundingBox.origin.y * h - height
     return CGRect(x: x, y: y, width: width, height: height)
 }
 
@@ -41,9 +27,7 @@ func draw(object: ObjectData, in cgContext: CGContext) {
     
     switch  object.objectType {
     case .box:
-        //cgContext.setStrokeColor(UIColor.magenta.cgColor)
-        //cgContext.stroke(rect, width: 2)
-        UIColor.magenta.setStroke()
+        cgContext.setStrokeColor(UIColor.magenta.cgColor)
         cgContext.stroke(rect)
     case .barcode(let barCode):
         cgContext.setStrokeColor(UIColor.yellow.cgColor)
